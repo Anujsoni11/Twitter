@@ -40,6 +40,22 @@ class LikeService {
             await this.commentRepository.addLike(commentId, like._id);
         }
     }
+
+    async toggleReplyLike(replyId) {
+        if (await this.likeRepository.replyLikeExist(replyId)) {
+            const reply = await this.commentRepository.get(replyId);
+            await this.likeRepository.destroy(reply.like);
+            await this.commentRepository.removeLike(replyId);
+            return true;
+        }
+        else {
+            const like = await this.likeRepository.create({
+                onModel: 'comment',
+                likeable: replyId
+            });
+            await this.commentRepository.addLike(replyId, like._id);
+        }
+    }
 }
 
 module.exports = LikeService;

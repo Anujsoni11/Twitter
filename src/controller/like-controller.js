@@ -33,14 +33,14 @@ const toggleCommentLike = async (req, res) => {
     try {
         const response = await likeService.toggleCommentLike(req.params.commentId);
         if (response) {
-            return res.status(StatusCodes.OK).json({
+            return res.status(200).json({
                 err: {},
                 success: true,
                 message: 'Successfully disliked'
             });
         }
         else {
-            return res.status(StatusCodes.OK).json({
+            return res.status(200).json({
                 err: {},
                 success: true,
                 message: 'Successfully liked'
@@ -48,7 +48,35 @@ const toggleCommentLike = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        return res.status(error.statusCode).json({
+        return res.status(500).json({
+            data: {},
+            err: error,
+            success: false,
+            message: error.message
+        });
+    }
+}
+
+const toggleReplyLike = async (req, res) => {
+    try {
+        const response = await likeService.toggleReplyLike(req.params.replyId);
+        if (response) {
+            return res.status(200).json({
+                err: {},
+                success: true,
+                message: 'Successfully disliked'
+            });
+        }
+        else {
+            return res.status(200).json({
+                err: {},
+                success: true,
+                message: 'Successfully liked'
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
             data: {},
             err: error,
             success: false,
@@ -59,5 +87,6 @@ const toggleCommentLike = async (req, res) => {
 
 module.exports = {
     toggleTweetLike,
-    toggleCommentLike
+    toggleCommentLike,
+    toggleReplyLike
 };

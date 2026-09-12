@@ -1,7 +1,7 @@
 const express = require('express');
 const { create, destroy, get, getAll, update } = require('../../controllers/tweet-controller');
 const { createComment, destroyComment, getComment, getAllComment, updateComment, replyComment} = require('../../controllers/comment-controller');
-const { toggleTweetLike, toggleCommentLike } = require('../../controllers/like-controller');
+const { toggleTweetLike, toggleCommentLike, toggleReplyLike } = require('../../controllers/like-controller');
 const authMiddleware = require('../../middleware/auth-middleware');
 
 const router = express.Router();
@@ -14,6 +14,7 @@ router.put('/tweets/:id', update);
 
 router.post('/tweets/:tweetId', toggleTweetLike);
 router.post('/tweets/:tweetId/comments/:commentId/likes', toggleCommentLike);
+router.post('/tweets/:tweetId/comments/:commentId/replies/:replyId/likes', toggleReplyLike);
 
 router.post('/tweets/:tweetId/comments', createComment);
 router.delete('/tweets/:tweetId/comments/:commentId', destroyComment);

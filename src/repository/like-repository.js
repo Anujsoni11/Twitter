@@ -18,10 +18,16 @@ class LikeRepository extends CrudRepository {
     }
 
     async commentLikeExist(commentId) {
-            const comment = await commentRepository.get(commentId);
-            if (comment.like) return true;
-            else return false;
-        }
+        const comment = await commentRepository.get(commentId);
+        if (comment.like) return true;
+        else return false;
+    }
+
+    async replyLikeExist(replyId) {
+        const reply = await commentRepository.get(replyId);
+        if (reply.like) return true;
+        else return false;
+    }
 }
 
 module.exports = LikeRepository;

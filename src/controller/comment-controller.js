@@ -24,14 +24,14 @@ const createComment = async (req, res) => {
 const replyComment = async (req, res) => {
     try {
         const response = await commentService.createReply(req.body, req.params.tweetId, req.params.commentId);
-        return res.status(StatusCodes.ACCEPTED).json({
+        return res.status(202).json({
             data: response,
             err: {},
             message: 'Successfully created a reply',
             success: true 
         });
     } catch (error) {
-        return res.status(error.statusCode).json({
+        return res.status(500).json({
             data: {},
             err: error,
             success: false,
