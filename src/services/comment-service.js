@@ -21,6 +21,20 @@ class CommentService {
         }
     }
 
+    async createReply(data, tweetId, commentId) {
+        try {
+            const reply = await this.commentRepository.create({
+                content: data.content,
+                onModel: 'comment',
+                commentable: commentId
+            });
+            await this.commentRepository.addReply(commentId, reply._id);
+            return reply;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async destroy(tweetId, commentId) {
         try {
             await this.commentRepository.destroy(commentId);

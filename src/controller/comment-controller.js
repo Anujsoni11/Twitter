@@ -21,6 +21,25 @@ const createComment = async (req, res) => {
     }
 }
 
+const replyComment = async (req, res) => {
+    try {
+        const response = await commentService.createReply(req.body, req.params.tweetId, req.params.commentId);
+        return res.status(StatusCodes.ACCEPTED).json({
+            data: response,
+            err: {},
+            message: 'Successfully created a reply',
+            success: true 
+        });
+    } catch (error) {
+        return res.status(error.statusCode).json({
+            data: {},
+            err: error,
+            success: false,
+            message: error.message
+        });
+    }
+}
+
 const destroyComment = async(req, res) => {
     try {
         const response = await commentService.destroy(req.params.tweetId, req.params.commentId);
@@ -99,6 +118,7 @@ const updateComment = async(req, res) => {
 
 module.exports = {
     createComment,
+    replyComment,
     destroyComment,
     getComment,
     getAllComment,

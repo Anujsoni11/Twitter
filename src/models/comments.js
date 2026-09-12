@@ -9,10 +9,20 @@ const commentSchema = new mongoose.Schema({
         type: String,
         enum: ['tweet', 'comment']
     },
+    like: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'like'
+    },
     commentable: {
         type: mongoose.Schema.Types.ObjectId,
         refPath: 'onModel'
-    }
+    },
+    replies: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'comment'
+        }
+    ]
 }, { timestamps: true });
 
 const comment = mongoose.model('comment', commentSchema);
