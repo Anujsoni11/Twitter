@@ -1,18 +1,19 @@
 const CommentService = require('../services/comment-service');
+const { StatusCodes } = require('http-status-codes');
 
 const commentService = new CommentService();
 
 const createComment = async (req, res) => {
     try {
         const response = await commentService.create(req.body, req.params.tweetId);
-        return res.status(202).json({
+        return res.status(StatusCodes.ACCEPTED).json({
             data: response,
             err: {},
             message: 'Successfully created a comment',
             success: true 
         });
     } catch (error) {
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data: {},
             err: error,
             success: false,
@@ -24,14 +25,14 @@ const createComment = async (req, res) => {
 const replyComment = async (req, res) => {
     try {
         const response = await commentService.createReply(req.body, req.params.tweetId, req.params.commentId);
-        return res.status(202).json({
+        return res.status(StatusCodes.ACCEPTED).json({
             data: response,
             err: {},
             message: 'Successfully created a reply',
             success: true 
         });
     } catch (error) {
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data: {},
             err: error,
             success: false,
@@ -43,14 +44,14 @@ const replyComment = async (req, res) => {
 const destroyComment = async(req, res) => {
     try {
         const response = await commentService.destroy(req.params.tweetId, req.params.commentId);
-        return res.status(200).json({
+        return res.status(StatusCodes.CREATED).json({
             data: response,
             err: {},
             success: true,
             message: 'Successfully deleted a comment'
         });
     } catch (error) {
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data: {},
             err: error,
             success: false,
@@ -62,14 +63,14 @@ const destroyComment = async(req, res) => {
 const getComment = async(req, res) => {
     try {
         const response = await commentService.get(req.params.commentId);
-        return res.status(200).json({
+        return res.status(StatusCodes.CREATED).json({
             data: response,
             err: {},
             success: true,
             message: 'Successfully fetched the comment'
         });
     } catch (error) {
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data: {},
             err: error,
             success: false,
@@ -81,14 +82,14 @@ const getComment = async(req, res) => {
 const getAllComment = async(req, res) => {
     try {
         const response = await commentService.getAll();
-        return res.status(200).json({
+        return res.status(StatusCodes.CREATED).json({
             data: response,
             err: {},
             success: true,
             message: 'Successfully fetched all comments'
         });
     } catch (error) {
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data: {},
             err: error,
             success: false,
@@ -100,14 +101,14 @@ const getAllComment = async(req, res) => {
 const updateComment = async(req, res) => {
     try {
         const response = await commentService.update(req.params.commentId, req.body);
-        return res.status(200).json({
+        return res.status(StatusCodes.CREATED).json({
             data: response,
             err: {},
             success: true,
             message: 'Successfully updated the comment'
         });
     } catch (error) {
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data: {},
             err: error,
             success: false,
