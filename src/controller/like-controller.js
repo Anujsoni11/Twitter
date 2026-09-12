@@ -29,6 +29,35 @@ const toggleTweetLike = async (req, res) => {
     }
 } 
 
+const toggleCommentLike = async (req, res) => {
+    try {
+        const response = await likeService.toggleCommentLike(req.params.commentId);
+        if (response) {
+            return res.status(StatusCodes.OK).json({
+                err: {},
+                success: true,
+                message: 'Successfully disliked'
+            });
+        }
+        else {
+            return res.status(StatusCodes.OK).json({
+                err: {},
+                success: true,
+                message: 'Successfully liked'
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(error.statusCode).json({
+            data: {},
+            err: error,
+            success: false,
+            message: error.message
+        });
+    }
+}
+
 module.exports = {
-    toggleTweetLike
+    toggleTweetLike,
+    toggleCommentLike
 };
