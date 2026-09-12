@@ -16,6 +16,11 @@ const tweets = new mongoose.Schema({
             ref: 'comment'
         }
     ],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    }
 }, { timestamps: true });
 
 const tweet = mongoose.model('tweet', tweets);

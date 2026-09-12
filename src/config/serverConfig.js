@@ -1,7 +1,13 @@
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
 
 dotenv.config();
 
+console.log("PORT:", process.env.PORT);
+console.log("SECRET_KEY:", process.env.SECRET_KEY);
+
 module.exports = {
-    PORT: process.env.PORT
+    PORT: process.env.PORT,
+    SALT: bcrypt.genSaltSync(10),
+    SECRET_KEY: process.env.SECRET_KEY
 }
